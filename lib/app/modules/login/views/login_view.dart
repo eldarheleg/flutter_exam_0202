@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_exam_0202/app/data/const.dart';
 import 'package:flutter_exam_0202/app/modules/registration/views/registration_view.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'package:get/get.dart';
 
@@ -9,6 +10,7 @@ import '../controllers/login_controller.dart';
 class LoginView extends GetView<LoginController> {
   LoginView({Key? key}) : super(key: key);
   LoginController loginController = Get.put(LoginController());
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -16,8 +18,8 @@ class LoginView extends GetView<LoginController> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: BoxDecoration(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
             image: DecorationImage(
           image: AssetImage('assets/images/podloga3.png'),
           fit: BoxFit.cover,
@@ -26,65 +28,71 @@ class LoginView extends GetView<LoginController> {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Stack(
             clipBehavior: Clip.none,
-            fit: StackFit.expand,
+            fit: StackFit.loose,
             alignment: AlignmentDirectional.bottomCenter,
             children: [
+              Positioned(
+                top: 100,
+                child: Container(
+                  height: 100,
+                  width: width,
+                  decoration: const BoxDecoration(color: whiteColor),
+                  child: const Center(
+                    child: Text(
+                      "PRIJAVA",
+                      style: TextStyle(fontSize: 32),
+                    ),
+                  ),
+                ),
+              ),
               Align(
-                alignment: Alignment(0.1, 0.5),
+                alignment: const Alignment(0.1, -0.1),
+                child: Container(
+                  height: 300,
+                  width: width,
+                  decoration: const BoxDecoration(color: whiteColor),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        TextField(
+                          controller: controller.emailController,
+                          decoration: const InputDecoration(
+                              hintText: "Email", suffixIcon: Icon(Icons.mail)),
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        TextField(
+                            controller: controller.passController,
+                            decoration: const InputDecoration(
+                                hintText: "Sifra", suffixIcon: Icon(Icons.key)))
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: const Alignment(0.0, 0.3),
                 child: Container(
                   height: height * 0.06,
-                  width: width,
+                  width: 200,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
                         foregroundColor: whiteColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20))),
-                    onPressed: logIn,
-                    child: Text(
+                    onPressed: () {
+                      loginController.login();
+                      loginController.getCurrentLocation();
+                    },
+                    child: const Text(
                       "Prijava",
                       style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Align(
-                alignment: Alignment(0.1, 0.2),
-                child: Container(
-                  height: 400,
-                  width: width,
-                  decoration: BoxDecoration(color: whiteColor),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        TextField(
-                          controller: controller.emailController,
-                          decoration: InputDecoration(
-                              hintText: "email", suffixIcon: Icon(Icons.mail)),
-                        ),
-                        TextField(
-                            controller: controller.passController,
-                            decoration: InputDecoration(hintText: "sifra"))
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 100,
-                child: Container(
-                  height: 100,
-                  width: width,
-                  decoration: BoxDecoration(color: whiteColor),
-                  child: Center(
-                    child: Text(
-                      "PRIJAVA",
-                      style: TextStyle(fontSize: 32),
                     ),
                   ),
                 ),
@@ -94,13 +102,5 @@ class LoginView extends GetView<LoginController> {
         ),
       ),
     );
-  }
-
-  signUp() {
-    Get.to(() => const RegistrationView(), transition: Transition.leftToRight);
-  }
-
-  logIn() {
-    Get.to(() => LoginView(), transition: Transition.rightToLeft);
   }
 }
