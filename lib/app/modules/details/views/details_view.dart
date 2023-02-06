@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_exam_0202/app/modules/login/controllers/login_controller.dart';
-
 import 'package:get/get.dart';
 
 import '../../../data/const.dart';
@@ -13,6 +12,7 @@ class DetailsView extends GetView<DetailsController> {
   int index = Get.arguments;
 
   //final timetableController = Get.find<TimetableController>();
+  LoginController loginC = Get.find();
   TimetableController timetableController = Get.put(TimetableController());
   //DetailsController detailsController = Get.put(DetailsController());
 
@@ -55,27 +55,56 @@ class DetailsView extends GetView<DetailsController> {
                       ),
                     ),
                     Container(
-                        height: 100,
+                        height: 60,
                         width: width * 4 / 5,
-                        child: Text(
-                          stanice[index].grad + ", Bosna i Hercegovina",
-                          style: TextStyle(fontSize: 32),
+                        child: FittedBox(
+                          child: Text(
+                            stanice[index].grad + ", Bosna i Hercegovina",
+                            style: const TextStyle(fontSize: 32),
+                          ),
                         )),
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     Container(
-                        height: 50,
-                        width: width * 4 / 5,
-                        child: Obx(() => Text(
-                              "Udaljenost ${(controller.udalj.value/1000).toPrecision(0).toInt()} Km",
-                              style: TextStyle(fontSize: 32),
-                            ))),
+                      height: 50,
+                      width: width * 4 / 5,
+                      child: loginC.loading.value
+                          ? const CircularProgressIndicator()
+                          : Obx(
+                              () => Text(
+                                "Udaljenost ${(controller.udalj.value / 1000).toPrecision(0).toInt()} Km",
+                                style: const TextStyle(fontSize: 24),
+                              ),
+                            ),
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
                     Container(
-                      height: 250,
+                      height: 180,
+                      width: width,
+                      child: Image.asset(stanice[index].slika,fit: BoxFit.cover,),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: 200,
+                      width: width * 4 / 5,
+                      child: FittedBox(
+                        child: Text(
+                          stanice[index].dugiOpis,
+                          softWrap: true,
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: 200,
                       color: Colors.red,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -85,27 +114,41 @@ class DetailsView extends GetView<DetailsController> {
                             padding: EdgeInsets.all(8.0),
                             child: Text(
                               "Kalkulacija cijene:",
-                              style: TextStyle(color: whiteColor, fontSize: 32),
+                              style: TextStyle(
+                                  color: whiteColor,
+                                  fontSize: 32,
+                                  fontStyle: FontStyle.italic),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text("${controller.udalj.value/1000}")
+                                Text(
+                                  "Odrasli: ${timetableController.odrasli.text.isEmpty ? 0 : timetableController.odrasli.text} x ${stanice[index].cijenaPoKm * (controller.udalj.value / 1000).toPrecision(0).toInt()} = ${controller.obicna.value} KM",
+                                  style: const TextStyle(
+                                      color: whiteColor,
+                                      fontSize: 28,
+                                      fontStyle: FontStyle.italic),
+                                )
                               ],
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                const Text(
-                                  "Djeca (70%):",
-                                  style: TextStyle(
-                                      color: whiteColor, fontSize: 32),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    "Djeca(70%): ${timetableController.djeca.text.isEmpty ? 0 : timetableController.djeca.text} x ${stanice[index].cijenaPoKm * (controller.udalj.value / 1000).toPrecision(0).toInt() * 0.3} = ${controller.djecija.value} KM",
+                                    style: const TextStyle(
+                                        color: whiteColor,
+                                        fontSize: 28,
+                                        fontStyle: FontStyle.italic),
+                                  ),
                                 ),
                               ],
                             ),
@@ -113,12 +156,19 @@ class DetailsView extends GetView<DetailsController> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                const Text(
-                                  "Penzioner (50%)",
-                                  style: TextStyle(
-                                      color: whiteColor, fontSize: 32),
+                                Expanded(
+                                  flex: 1,
+                                  child: FittedBox(
+                                    child: Text(
+                                      "Penzioner(50%): ${timetableController.penzioneri.text.isEmpty ? 0 : timetableController.penzioneri.text} x ${stanice[index].cijenaPoKm * (controller.udalj.value / 1000).toPrecision(0).toInt() * 0.5} = ${controller.penzionerska.value} KM",
+                                      style: const TextStyle(
+                                          color: whiteColor,
+                                          fontSize: 28,
+                                          fontStyle: FontStyle.italic),
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -126,6 +176,42 @@ class DetailsView extends GetView<DetailsController> {
                         ],
                       ),
                     ),
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Obx(() => Text(
+                                  '${controller.ukupno.value.toString()} KM',
+                                  style: const TextStyle(
+                                      fontSize: 32,
+                                      color: blackColor,
+                                      fontStyle: FontStyle.italic),
+                                )),
+                          ),
+                          Expanded(
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                  backgroundColor: Colors.blue),
+                              onPressed: () {
+                                Get.defaultDialog(
+                                  title: "Obavijest",
+                                  middleText:
+                                      "Vasa karta je placena. Zahvaljujemo sto putujete sa nama",
+                                );
+                              },
+                              child: const Text(
+                                "Plati",
+                                style: TextStyle(
+                                    fontSize: 32,
+                                    color: whiteColor,
+                                    fontStyle: FontStyle.italic),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),

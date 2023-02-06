@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_exam_0202/app/data/const.dart';
 import 'package:flutter_exam_0202/app/modules/details/controllers/details_controller.dart';
 import 'package:flutter_exam_0202/app/modules/details/views/details_view.dart';
-import 'package:flutter_exam_0202/app/modules/login/controllers/login_controller.dart';
-
 import 'package:get/get.dart';
 
-import '../../../data/autobuska_stanica.dart';
 import '../../../data/podaci.dart';
 import '../controllers/timetable_controller.dart';
 
 class TimetableView extends GetView<TimetableController> {
   TimetableView({Key? key}) : super(key: key);
-  DetailsController detailsController = Get.put(DetailsController(),permanent: true);
-  TimetableController timetableController = Get.put(TimetableController());
+  TimetableController timetableController =
+      Get.put(TimetableController(), permanent: true);
+  DetailsController detailsController =
+      Get.put(DetailsController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +43,7 @@ class TimetableView extends GetView<TimetableController> {
                       height: 50,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Text(
                             "RED VOZNJE",
                             style: TextStyle(color: Colors.red, fontSize: 22),
@@ -90,8 +89,10 @@ class TimetableView extends GetView<TimetableController> {
                           child: InkWell(
                             onTap: () {
                               Get.to(() => DetailsView(), arguments: index);
-                              timetableController.index.value = index;
-                              detailsController.kalkulacija(index);
+                              detailsController.kalkulacijaUdaljenosti(index);
+                              detailsController
+                                  .kalkulacijaCijenePojedinacno(index);
+                              detailsController.kalkulacijaCijeneUkupno();
                             },
                             child: Card(
                               elevation: 5,
@@ -151,7 +152,10 @@ class TimetableView extends GetView<TimetableController> {
                             padding: EdgeInsets.all(8.0),
                             child: Text(
                               "Unesite broj putnika:",
-                              style: TextStyle(color: whiteColor, fontSize: 32),
+                              style: TextStyle(
+                                  color: whiteColor,
+                                  fontSize: 32,
+                                  fontStyle: FontStyle.italic),
                             ),
                           ),
                           Padding(
@@ -162,7 +166,9 @@ class TimetableView extends GetView<TimetableController> {
                                 const Text(
                                   "Odrasli",
                                   style: TextStyle(
-                                      color: whiteColor, fontSize: 32),
+                                      color: whiteColor,
+                                      fontSize: 32,
+                                      fontStyle: FontStyle.italic),
                                 ),
                                 const SizedBox(
                                   width: 10,
@@ -174,9 +180,9 @@ class TimetableView extends GetView<TimetableController> {
                                     width: width * 1 / 2,
                                     child: TextField(
                                       controller: timetableController.odrasli,
-                                      style: TextStyle(fontSize: 26),
+                                      style: const TextStyle(fontSize: 26),
                                       keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           contentPadding: EdgeInsets.symmetric(
                                               horizontal: 10)),
                                     ),
@@ -193,7 +199,9 @@ class TimetableView extends GetView<TimetableController> {
                                 const Text(
                                   "Djeca",
                                   style: TextStyle(
-                                      color: whiteColor, fontSize: 32),
+                                      color: whiteColor,
+                                      fontSize: 32,
+                                      fontStyle: FontStyle.italic),
                                 ),
                                 const SizedBox(
                                   width: 10,
@@ -205,9 +213,9 @@ class TimetableView extends GetView<TimetableController> {
                                     width: width * 1 / 2,
                                     child: TextField(
                                       controller: timetableController.djeca,
-                                      style: TextStyle(fontSize: 26),
+                                      style: const TextStyle(fontSize: 26),
                                       keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           contentPadding: EdgeInsets.symmetric(
                                               horizontal: 10)),
                                     ),
@@ -224,7 +232,9 @@ class TimetableView extends GetView<TimetableController> {
                                 const Text(
                                   "Penzioner",
                                   style: TextStyle(
-                                      color: whiteColor, fontSize: 32),
+                                      color: whiteColor,
+                                      fontSize: 32,
+                                      fontStyle: FontStyle.italic),
                                 ),
                                 const SizedBox(
                                   width: 10,
@@ -237,9 +247,9 @@ class TimetableView extends GetView<TimetableController> {
                                     child: TextField(
                                       controller:
                                           timetableController.penzioneri,
-                                      style: TextStyle(fontSize: 26),
+                                      style: const TextStyle(fontSize: 26),
                                       keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           contentPadding: EdgeInsets.symmetric(
                                               horizontal: 10)),
                                     ),

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_exam_0202/app/data/const.dart';
-import 'package:flutter_exam_0202/app/modules/registration/views/registration_view.dart';
-import 'package:geolocator/geolocator.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
   LoginView({Key? key}) : super(key: key);
-  //LoginController loginController = Get.put(LoginController());
+  LoginController loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +84,7 @@ class LoginView extends GetView<LoginController> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20))),
                     onPressed: () {
-                      controller.login();
+                      loginController.login();
                       //loginController.getCurrentLocation();
                     },
                     child: const Text(

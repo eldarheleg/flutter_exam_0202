@@ -25,20 +25,24 @@ class LoginController extends GetxController {
       Get.snackbar(":(", "");
     } else {
       if (user.email.contains('eldar') && user.password.contains('heleg')) {
-        Get.offAll(TimetableView(), transition: Transition.fadeIn);
+        Get.to(()=>TimetableView(), transition: Transition.fadeIn);
       } else {
         Get.snackbar(":(", "Something went wrong");
       }
     }
   }
 
+  RxBool loading = false.obs;
+
   Future<void> getCurrentLocation() async {
+    loading.value = true;
     bool serviceEnabled;
     LocationPermission permission;
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       Get.snackbar(":(", "Loacation is turned off");
+      loading.value = true;
       return;
     }
 
@@ -48,9 +52,10 @@ class LoginController extends GetxController {
     }
     try {
       Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.best,
-          forceAndroidLocationManager: true);
-      print("fetching finished");
+              desiredAccuracy: LocationAccuracy.best,
+              forceAndroidLocationManager: true)
+          .whenComplete(() => loading.value = false);
+      print("fetching finished--------------------------------- ");
       lat = position.latitude;
       long = position.longitude;
     } catch (e) {
