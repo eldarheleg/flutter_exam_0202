@@ -9,7 +9,7 @@ import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
   LoginView({Key? key}) : super(key: key);
-  LoginController loginController = Get.put(LoginController());
+  //LoginController loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -87,8 +87,8 @@ class LoginView extends GetView<LoginController> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20))),
                     onPressed: () {
-                      loginController.login();
-                      loginController.getCurrentLocation();
+                      controller.login();
+                      //loginController.getCurrentLocation();
                     },
                     child: const Text(
                       "Prijava",

@@ -1,23 +1,23 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
+import '../../../data/podaci.dart';
+import '../../login/controllers/login_controller.dart';
+
 class DetailsController extends GetxController {
-  //TODO: Implement DetailsController
+  LoginController loginC = Get.find();
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  RxDouble udalj = 0.0.obs;
+
+  kalkulacija(int index) {
+    double udaljenost = 0.0;
+    print("lat ${loginC.lat}");
+    print("lat ${stanice[index].latitude}");
+    print("lat ${loginC.long}");
+    print("lat ${stanice[index].longitude}");
+    udaljenost = Geolocator.distanceBetween(loginC.lat, loginC.long,
+        stanice[index].latitude, stanice[index].longitude);
+    print(udaljenost);
+    udalj.value = udaljenost;
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

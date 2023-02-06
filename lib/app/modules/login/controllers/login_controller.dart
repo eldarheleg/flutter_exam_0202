@@ -10,13 +10,12 @@ class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
-  RxDouble lat = 0.0.obs;
-  RxDouble long = 0.0.obs;
+  double lat = 0.0;
+  double long = 0.0;
 
   @override
   void onInit() {
     super.onInit();
-    getCurrentLocation();
   }
 
   login() {
@@ -33,23 +32,14 @@ class LoginController extends GetxController {
     }
   }
 
-  // getCurrentLocation() {
-  //   Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-  //       .then((Position position) {
-  //     lat.value = position.latitude;
-  //     long.value = position.longitude;
-  //   }).catchError((e) {
-  //     print(e);
-  //   });
-  // }
-  getCurrentLocation() async {
+  Future<void> getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       Get.snackbar(":(", "Loacation is turned off");
-      return false;
+      return;
     }
 
     permission = await Geolocator.checkPermission();
@@ -58,10 +48,11 @@ class LoginController extends GetxController {
     }
     try {
       Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high,
+          desiredAccuracy: LocationAccuracy.best,
           forceAndroidLocationManager: true);
-      lat.value = position.latitude;
-      long.value = position.longitude;
+      print("fetching finished");
+      lat = position.latitude;
+      long = position.longitude;
     } catch (e) {
       print(e);
     }

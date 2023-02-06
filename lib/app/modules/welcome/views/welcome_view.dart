@@ -6,6 +6,8 @@ import 'package:flutter_exam_0202/app/modules/registration/views/registration_vi
 import 'package:flutter_exam_0202/app/modules/welcome/controllers/welcome_controller.dart';
 // Package imports:
 import 'package:get/get.dart';
+
+import '../../login/controllers/login_controller.dart';
 // Project imports:
 
 class WelcomeView extends GetView<WelcomeController> {
@@ -83,11 +85,12 @@ class WelcomeView extends GetView<WelcomeController> {
                 top: 180,
                 child: Container(
                   height: 200,
-                  width: width*2/3,
-                  decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/logo.png"))),
+                  width: width * 2 / 3,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/logo.png"))),
                 ),
               ),
-              
             ],
           ),
         ),
@@ -100,7 +103,9 @@ class WelcomeView extends GetView<WelcomeController> {
   }
 
   logIn() {
-    Get.to(() =>  LoginView(), transition: Transition.rightToLeft);
+    Get.to(() => LoginView(), transition: Transition.rightToLeft);
+    LoginController loginController =
+        Get.put(LoginController(), permanent: true);
+    loginController.getCurrentLocation();
   }
-
 }

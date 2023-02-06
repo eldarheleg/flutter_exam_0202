@@ -1,73 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_exam_0202/app/data/const.dart';
+import 'package:flutter_exam_0202/app/modules/details/controllers/details_controller.dart';
+import 'package:flutter_exam_0202/app/modules/details/views/details_view.dart';
 import 'package:flutter_exam_0202/app/modules/login/controllers/login_controller.dart';
 
 import 'package:get/get.dart';
 
 import '../../../data/autobuska_stanica.dart';
+import '../../../data/podaci.dart';
 import '../controllers/timetable_controller.dart';
 
 class TimetableView extends GetView<TimetableController> {
   TimetableView({Key? key}) : super(key: key);
-  //LoginController loginController = Get.find();
-  LoginController loginController = Get.put(LoginController());
-  List<AutobuskaStanica> stanice = [
-    AutobuskaStanica(
-        id: 1,
-        grad: "Jajce",
-        kratkiOpis:
-            "Duis vestibulum elit vel neque pharetra vulputate. Quisque scelerisque nisi urna. Duis rutrum non risus in imperdiet.",
-        slika: "assets/images/jajce.jpg",
-        dugiOpis:
-            "+-------------+---------------------+---------+---------+\n| Broj linije |       Relacija      | Polazak | Dolazak |\n+-------------+---------------------+---------+---------+\n| 720         | Čapljina – Sarajevo | 06.09   | 08:35   |\n+-------------+---------------------+---------+---------+\n| 723         | Sarajevo – Čapljina | 07:15   | 09:37   |\n+-------------+---------------------+---------+---------+\n| 722         | Čapljina – Sarajevo | 16:42   | 19:04   |\n+-------------+---------------------+---------+---------+\n| 721         | Sarajevo – Čapljina | 16:49   | 19:15   |\n+-------------+---------------------+---------+---------+\n| 2400        | Konjic – Sarajevo   | 05:25   | 06:51   |\n+-------------+---------------------+---------+---------+\n| 2401        | Sarajevo – Konjic   | 15:48   | 17:14   |\n+-------------+---------------------+---------+---------+",
-        cijenaPoKm: 1.0,
-        longitude: 17.27059,
-        latitude: 44.34203),
-    AutobuskaStanica(
-        id: 2,
-        grad: "Banja Luka",
-        kratkiOpis:
-            "Duis vestibulum elit vel neque pharetra vulputate. Quisque scelerisque nisi urna. Duis rutrum non risus in imperdiet.",
-        slika: "assets/images/banjaluka.png",
-        dugiOpis:
-            "+-------------+---------------------+---------+---------+\n| Broj linije |       Relacija      | Polazak | Dolazak |\n+-------------+---------------------+---------+---------+\n| 720         | Čapljina – Sarajevo | 06.09   | 08:35   |\n+-------------+---------------------+---------+---------+\n| 723         | Sarajevo – Čapljina | 07:15   | 09:37   |\n+-------------+---------------------+---------+---------+\n| 722         | Čapljina – Sarajevo | 16:42   | 19:04   |\n+-------------+---------------------+---------+---------+\n| 721         | Sarajevo – Čapljina | 16:49   | 19:15   |\n+-------------+---------------------+---------+---------+\n| 2400        | Konjic – Sarajevo   | 05:25   | 06:51   |\n+-------------+---------------------+---------+---------+\n| 2401        | Sarajevo – Konjic   | 15:48   | 17:14   |\n+-------------+---------------------+---------+---------+",
-        cijenaPoKm: 1.0,
-        longitude: 17.191000,
-        latitude: 44.772182),
-    AutobuskaStanica(
-        id: 3,
-        grad: "Travnik",
-        kratkiOpis:
-            "Duis vestibulum elit vel neque pharetra vulputate. Quisque scelerisque nisi urna. Duis rutrum non risus in imperdiet.",
-        slika: "assets/images/travnik.jpg",
-        dugiOpis:
-            "+-------------+---------------------+---------+---------+\n| Broj linije |       Relacija      | Polazak | Dolazak |\n+-------------+---------------------+---------+---------+\n| 720         | Čapljina – Sarajevo | 06.09   | 08:35   |\n+-------------+---------------------+---------+---------+\n| 723         | Sarajevo – Čapljina | 07:15   | 09:37   |\n+-------------+---------------------+---------+---------+\n| 722         | Čapljina – Sarajevo | 16:42   | 19:04   |\n+-------------+---------------------+---------+---------+\n| 721         | Sarajevo – Čapljina | 16:49   | 19:15   |\n+-------------+---------------------+---------+---------+\n| 2400        | Konjic – Sarajevo   | 05:25   | 06:51   |\n+-------------+---------------------+---------+---------+\n| 2401        | Sarajevo – Konjic   | 15:48   | 17:14   |\n+-------------+---------------------+---------+---------+",
-        cijenaPoKm: 1.0,
-        longitude: 17.66583,
-        latitude: 44.22637),
-    AutobuskaStanica(
-        id: 4,
-        grad: "Sarajevo",
-        kratkiOpis:
-            "Duis vestibulum elit vel neque pharetra vulputate. Quisque scelerisque nisi urna. Duis rutrum non risus in imperdiet.",
-        slika: "assets/images/sarajevo.jpg",
-        dugiOpis:
-            "+-------------+---------------------+---------+---------+\n| Broj linije |       Relacija      | Polazak | Dolazak |\n+-------------+---------------------+---------+---------+\n| 720         | Čapljina – Sarajevo | 06.09   | 08:35   |\n+-------------+---------------------+---------+---------+\n| 723         | Sarajevo – Čapljina | 07:15   | 09:37   |\n+-------------+---------------------+---------+---------+\n| 722         | Čapljina – Sarajevo | 16:42   | 19:04   |\n+-------------+---------------------+---------+---------+\n| 721         | Sarajevo – Čapljina | 16:49   | 19:15   |\n+-------------+---------------------+---------+---------+\n| 2400        | Konjic – Sarajevo   | 05:25   | 06:51   |\n+-------------+---------------------+---------+---------+\n| 2401        | Sarajevo – Konjic   | 15:48   | 17:14   |\n+-------------+---------------------+---------+---------+",
-        cijenaPoKm: 1.0,
-        longitude: 18.413029,
-        latitude: 43.856430),
-    AutobuskaStanica(
-        id: 5,
-        grad: "Bihać",
-        kratkiOpis:
-            "Duis vestibulum elit vel neque pharetra vulputate. Quisque scelerisque nisi urna. Duis rutrum non risus in imperdiet.",
-        slika: "assets/images/bihac.jpg",
-        dugiOpis:
-            "+-------------+---------------------+---------+---------+\n| Broj linije |       Relacija      | Polazak | Dolazak |\n+-------------+---------------------+---------+---------+\n| 720         | Čapljina – Sarajevo | 06.09   | 08:35   |\n+-------------+---------------------+---------+---------+\n| 723         | Sarajevo – Čapljina | 07:15   | 09:37   |\n+-------------+---------------------+---------+---------+\n| 722         | Čapljina – Sarajevo | 16:42   | 19:04   |\n+-------------+---------------------+---------+---------+\n| 721         | Sarajevo – Čapljina | 16:49   | 19:15   |\n+-------------+---------------------+---------+---------+\n| 2400        | Konjic – Sarajevo   | 05:25   | 06:51   |\n+-------------+---------------------+---------+---------+\n| 2401        | Sarajevo – Konjic   | 15:48   | 17:14   |\n+-------------+---------------------+---------+---------+",
-        cijenaPoKm: 1.0,
-        longitude: 15.868565,
-        latitude: 44.811962),
-  ];
+  DetailsController detailsController = Get.put(DetailsController(),permanent: true);
+  TimetableController timetableController = Get.put(TimetableController());
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -89,7 +36,7 @@ class TimetableView extends GetView<TimetableController> {
               //keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               //physics: AlwaysScrollableScrollPhysics(),
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -97,11 +44,12 @@ class TimetableView extends GetView<TimetableController> {
                       height: 50,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           Text(
                             "RED VOZNJE",
                             style: TextStyle(color: Colors.red, fontSize: 22),
                           ),
+                          //Text(loginController.lat.toString()),
                           Icon(Icons.menu)
                         ],
                       ),
@@ -133,43 +81,60 @@ class TimetableView extends GetView<TimetableController> {
                     ),
                     Container(
                       height: 500,
-                      width: width * 6 / 7,
+                      width: width,
                       child: ListView.builder(
                         itemCount: stanice.length,
                         itemBuilder: (context, index) => Container(
                           height: 100,
                           padding: EdgeInsets.zero,
-                          child: Card(
-                            elevation: 5,
-                            //margin: EdgeInsets.zero,
-                            semanticContainer: true,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Image.asset(
-                                    width: width,
-                                    height: height,
-                                    stanice[index].slika,
-                                    fit: BoxFit.cover,
+                          child: InkWell(
+                            onTap: () {
+                              Get.to(() => DetailsView(), arguments: index);
+                              timetableController.index.value = index;
+                              detailsController.kalkulacija(index);
+                            },
+                            child: Card(
+                              elevation: 5,
+                              //margin: EdgeInsets.zero,
+                              semanticContainer: true,
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Image.asset(
+                                      width: width,
+                                      height: height,
+                                      stanice[index].slika,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 10,),
-                                Expanded(
-                                    flex: 2,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(stanice[index].grad,style: TextStyle(fontSize: 22),),
-                                        SizedBox(height: 5,),
-                                        Text(stanice[index].kratkiOpis),
-                                      ],
-                                    ))
-                              ],
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                      flex: 2,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            stanice[index].grad,
+                                            style: const TextStyle(
+                                                fontSize: 22,
+                                                fontWeight: FontWeight.w700,
+                                                fontStyle: FontStyle.italic),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(stanice[index].kratkiOpis),
+                                        ],
+                                      ))
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -182,9 +147,12 @@ class TimetableView extends GetView<TimetableController> {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Text(
-                            "Unesite broj putnika:",
-                            style: TextStyle(color: whiteColor, fontSize: 32),
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              "Unesite broj putnika:",
+                              style: TextStyle(color: whiteColor, fontSize: 32),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -196,18 +164,21 @@ class TimetableView extends GetView<TimetableController> {
                                   style: TextStyle(
                                       color: whiteColor, fontSize: 32),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(5),
                                   child: Container(
                                     color: whiteColor,
-                                    width: 150,
-                                    child: const TextField(
-                                      scrollPadding:
-                                          EdgeInsets.only(bottom: 40),
-                                      decoration: InputDecoration(),
+                                    width: width * 1 / 2,
+                                    child: TextField(
+                                      controller: timetableController.odrasli,
+                                      style: TextStyle(fontSize: 26),
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(
+                                              horizontal: 10)),
                                     ),
                                   ),
                                 ),
@@ -224,16 +195,21 @@ class TimetableView extends GetView<TimetableController> {
                                   style: TextStyle(
                                       color: whiteColor, fontSize: 32),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(5),
                                   child: Container(
                                     color: whiteColor,
-                                    width: 150,
-                                    child: const TextField(
-                                      decoration: InputDecoration(),
+                                    width: width * 1 / 2,
+                                    child: TextField(
+                                      controller: timetableController.djeca,
+                                      style: TextStyle(fontSize: 26),
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(
+                                              horizontal: 10)),
                                     ),
                                   ),
                                 ),
@@ -246,20 +222,26 @@ class TimetableView extends GetView<TimetableController> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 const Text(
-                                  "Renzioner",
+                                  "Penzioner",
                                   style: TextStyle(
                                       color: whiteColor, fontSize: 32),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(5),
                                   child: Container(
                                     color: whiteColor,
-                                    width: 150,
-                                    child: const TextField(
-                                      decoration: InputDecoration(),
+                                    width: width * 1 / 2,
+                                    child: TextField(
+                                      controller:
+                                          timetableController.penzioneri,
+                                      style: TextStyle(fontSize: 26),
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(
+                                              horizontal: 10)),
                                     ),
                                   ),
                                 ),
